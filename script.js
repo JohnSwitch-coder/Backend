@@ -1,69 +1,117 @@
-// Hiệu ứng chuột đi theo
-const cursor = document.querySelector(".cursor");
-document.addEventListener("mousemove", (e) => {
-  cursor.style.left = e.clientX + "px";
-  cursor.style.top = e.clientY + "px";
-});
+// 1. Hiệu ứng làm mượt chuyển đổi Active trạng thái Menu khi cuộn trang
+const sections = document.querySelectorAll("section");
+const navLi = document.querySelectorAll(".nav-links a");
 
-// Hiệu ứng xuất hiện khi cuộn (ScrollReveal)
-ScrollReveal().reveal(".hero-content", {
-  delay: 200,
-  origin: "bottom",
-  distance: "50px",
-});
-ScrollReveal().reveal(".project-card", {
-  interval: 200,
-  origin: "right",
-  distance: "100px",
-});
-ScrollReveal().reveal(".skill-box", { interval: 100, scale: 0.5 });
-
-// Hiệu ứng Hover card
-document.querySelectorAll(".project-card").forEach((card) => {
-  card.addEventListener("mouseenter", () => {
-    cursor.style.transform = "scale(3)";
-    cursor.style.backgroundColor = "rgba(0, 242, 255, 0.1)";
+window.addEventListener("scroll", () => {
+  let current = "";
+  sections.forEach((section) => {
+    const sectionTop = section.offsetTop;
+    const sectionHeight = section.clientHeight;
+    if (pageYOffset >= sectionTop - 150) {
+      current = section.getAttribute("id");
+    }
   });
-  card.addEventListener("mouseleave", () => {
-    cursor.style.transform = "scale(1)";
-    cursor.style.backgroundColor = "transparent";
+
+  navLi.forEach((a) => {
+    a.classList.remove("active");
+    if (a.getAttribute("href").includes(current)) {
+      a.classList.add("active");
+    }
   });
 });
 
-// Giả lập đồng hồ Uptime của hệ thống
-function updateUptime() {
-  const start = new Date("2021-09-01").getTime(); // Giả định ngày bắt đầu sự nghiệp
-  setInterval(() => {
-    const now = new Date().getTime();
-    const diff = now - start;
+// 2. Kích hoạt hiệu ứng chạy Thanh Kỹ Năng (Skill Bars)
+const skillsSection = document.getElementById("skills");
+const progressBars = document.querySelectorAll(".skill-bar-fill");
 
-    const hours = Math.floor(diff / (1000 * 60 * 60));
-    const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const secs = Math.floor((diff % (1000 * 60)) / 1000);
-
-    document.getElementById("uptime").innerText =
-      `${String(hours).padStart(2, "0")}:${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
-  }, 1000);
+function showProgress() {
+  progressBars.forEach((progressBar) => {
+    const value = progressBar.getAttribute("data-percent");
+    progressBar.style.width = value;
+  });
 }
 
-// Hiệu ứng Fade-in khi scroll
 const observer = new IntersectionObserver(
-  (entries) => {
+  (entries, observer) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        entry.target.style.opacity = "1";
-        entry.target.style.transform = "translateY(0)";
+        showProgress();
+        observer.unobserve(entry.target);
       }
     });
   },
-  { threshold: 0.1 },
+  { threshold: 0.3 },
 );
 
-document.querySelectorAll(".case-study, .layer-card").forEach((el) => {
-  el.style.opacity = "0";
-  el.style.transform = "translateY(20px)";
-  el.style.transition = "all 0.6s ease-out";
-  observer.observe(el);
+observer.observe(skillsSection);
+
+// 3. Xử lý bộ lọc dự án (Project Grid Filter)
+const filterBtns = document.querySelectorAll(".filter-btn");
+const projectCards = document.querySelectorAll(".project-card");
+
+filterBtns.forEach((btn) => {
+  btn.addEventListener("click", (e) => {
+    filterBtns.forEach((b) => b.classList.remove("active"));
+    e.target.classList.add("active");
+
+    const filterValue = e.target.getAttribute("data-filter");
+
+    projectCards.forEach((card) => {
+      if (
+        filterValue === "all" ||
+        card.getAttribute("data-tech") === filterValue
+      ) {
+        card.style.display = "flex";
+        card.style.animation = "fadeIn 0.5s ease forwards";
+      } else {
+        card.style.display = "none";
+      }
+    });
+  });
 });
 
-updateUptime();
+// song ngu
+document.addEventListener("DOMContentLoaded", () => {
+  const btnVi = document.getElementById("lang-vi");
+  const btnEn = document.getElementById("lang-en");
+
+  // Hàm chuyển đổi ngôn ngữ
+  const setLanguage = (lang) => {
+    // Cập nhật thuộc tính lang của thẻ html
+    document.documentElement.lang = lang;
+
+    // Tìm tất cả các phần tử có thuộc tính data-vi hoặc data-en
+    const translatableElements = document.querySelectorAll(
+      "[data-vi], [data-en]",
+    );
+
+    translatableElements.forEach((el) => {
+      const text = el.getAttribute(`data-${lang}`);
+      if (text) {
+        el.innerHTML = text;
+      }
+    });
+
+    // Cập nhật trạng thái Active của các nút
+    if (lang === "en") {
+      btnEn.classList.add("active");
+      btnVi.classList.remove("active");
+    } else {
+      btnVi.classList.add("active");
+      btnEn.classList.remove("active");
+    }
+
+    // Lưu lựa chọn vào localStorage
+    localStorage.setItem("preferred_lang", lang);
+  };
+
+  // Lắng nghe sự kiện click nút
+  if (btnVi && btnEn) {
+    btnVi.addEventListener("click", () => setLanguage("vi"));
+    btnEn.addEventListener("click", () => setLanguage("en"));
+  }
+
+  // Khởi tạo ngôn ngữ ban đầu (ưu tiên localStorage, mặc định là 'vi')
+  const savedLang = localStorage.getItem("preferred_lang") || "vi";
+  setLanguage(savedLang);
+});

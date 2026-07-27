@@ -12,668 +12,8 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
-
-    <style>
-      /* --- CSS VARIABLES & RESET --- */
-      :root {
-        --bg-main: #0a0a0c;
-        --bg-card: #121216;
-        --accent-cyan: #00f2fe;
-        --accent-purple: #4facfe;
-        --text-main: #f3f4f6;
-        --text-muted: #9ca3af;
-        --border-glow: rgba(0, 242, 254, 0.2);
-        --gradient-tech: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
-      }
-
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-        scroll-behavior: smooth;
-      }
-
-      body {
-        background-color: var(--bg-main);
-        color: var(--text-main);
-        font-family: "Space Grotesk", sans-serif;
-        overflow-x: hidden;
-        line-height: 1.6;
-      }
-
-      /* Custom Scrollbar */
-      ::-webkit-scrollbar {
-        width: 8px;
-      }
-
-      ::-webkit-scrollbar-track {
-        background: var(--bg-main);
-      }
-
-      ::-webkit-scrollbar-thumb {
-        background: #222;
-        border-radius: 4px;
-      }
-
-      ::-webkit-scrollbar-thumb:hover {
-        background: var(--accent-cyan);
-      }
-
-      /* --- GLOBAL LAYOUT --- */
-      .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 2rem;
-      }
-
-      section {
-        padding: 8rem 0 4rem 0;
-        position: relative;
-      }
-
-      .section-title {
-        font-family: "Syne", sans-serif;
-        font-size: 3rem;
-        font-weight: 800;
-        margin-bottom: 3rem;
-        text-transform: uppercase;
-        background: var(--gradient-tech);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        letter-spacing: -1px;
-      }
-
-      /* --- NAVIGATION --- */
-      nav {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        z-index: 100;
-        backdrop-filter: blur(12px);
-        background: rgba(10, 10, 12, 0.7);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      }
-
-      .nav-container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        height: 70px;
-      }
-
-      .logo {
-        font-family: "Syne", sans-serif;
-        font-size: 1.5rem;
-        font-weight: 800;
-        color: #fff;
-        text-decoration: none;
-      }
-
-      .logo span {
-        color: var(--accent-cyan);
-      }
-
-      .nav-links {
-        display: flex;
-        gap: 2rem;
-        list-style: none;
-      }
-
-      .nav-links a {
-        color: var(--text-muted);
-        text-decoration: none;
-        font-weight: 500;
-        transition: 0.3s;
-        font-size: 0.95rem;
-      }
-
-      .nav-links a:hover,
-      .nav-links a.active {
-        color: var(--accent-cyan);
-        text-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
-      }
-
-      /* --- HERO SECTION --- */
-      #hero {
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        padding-top: 70px;
-        background: radial-gradient(
-          circle at 80% 20%,
-          rgba(79, 172, 254, 0.05) 0%,
-          transparent 50%
-        );
-      }
-
-      .hero-grid {
-        display: grid;
-        grid-template-columns: 1.2fr 0.8fr;
-        gap: 2rem;
-        align-items: center;
-      }
-
-      .hero-tag {
-        display: inline-block;
-        padding: 0.5rem 1rem;
-        background: rgba(0, 242, 254, 0.05);
-        border: 1px solid rgba(0, 242, 254, 0.2);
-        color: var(--accent-cyan);
-        border-radius: 50px;
-        font-size: 0.85rem;
-        margin-bottom: 1.5rem;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-      }
-
-      .hero-title {
-        font-family: "Syne", sans-serif;
-        font-size: 4.5rem;
-        font-weight: 800;
-        line-height: 1.1;
-        margin-bottom: 1.5rem;
-      }
-
-      .hero-title span {
-        background: var(--gradient-tech);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
-
-      .hero-desc {
-        font-size: 1.2rem;
-        color: var(--text-muted);
-        margin-bottom: 2.5rem;
-        max-width: 600px;
-      }
-
-      .cta-group {
-        display: flex;
-        gap: 1.5rem;
-      }
-
-      .btn {
-        padding: 0.8rem 2rem;
-        font-weight: 600;
-        text-decoration: none;
-        border-radius: 8px;
-        transition: 0.3s;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
-
-      .btn-primary {
-        background: var(--gradient-tech);
-        color: #000;
-      }
-
-      .btn-primary:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 10px 20px rgba(0, 242, 254, 0.3);
-      }
-
-      .btn-secondary {
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        color: var(--text-main);
-        background: rgba(255, 255, 255, 0.02);
-      }
-
-      .btn-secondary:hover {
-        border-color: var(--accent-cyan);
-        color: var(--accent-cyan);
-      }
-
-      /* Contact Minimal Widget */
-      .hero-contact-info {
-        margin-top: 3rem;
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.05);
-        padding-top: 2rem;
-      }
-
-      .info-item {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        color: var(--text-muted);
-        font-size: 0.9rem;
-      }
-
-      .info-item i {
-        color: var(--accent-cyan);
-      }
-
-      .info-item a {
-        color: var(--text-muted);
-        text-decoration: none;
-        transition: 0.3s;
-      }
-
-      .info-item a:hover {
-        color: var(--accent-cyan);
-      }
-
-      /* Code Terminal Mockup (Right Side Hero) */
-      .terminal-box {
-        background: var(--bg-card);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        border-radius: 12px;
-        padding: 1.5rem;
-        font-family: monospace;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-        position: relative;
-      }
-
-      .terminal-header {
-        display: flex;
-        gap: 0.5rem;
-        margin-bottom: 1.5rem;
-      }
-
-      .dot {
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-      }
-
-      .dot-r {
-        background: #ff5f56;
-      }
-
-      .dot-y {
-        background: #ffbd2e;
-      }
-
-      .dot-g {
-        background: #27c93f;
-      }
-
-      .terminal-row {
-        margin-bottom: 0.5rem;
-        font-size: 0.9rem;
-      }
-
-      .t-purple {
-        color: #c792ea;
-      }
-
-      .t-cyan {
-        color: #89ddff;
-      }
-
-      .t-yellow {
-        color: #f7ebc6;
-      }
-
-      .t-green {
-        color: #c3e88d;
-      }
-
-      /* --- SKILLS SECTION --- */
-      .skills-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 2rem;
-      }
-
-      .skill-category {
-        background: var(--bg-card);
-        border: 1px solid rgba(255, 255, 255, 0.03);
-        border-radius: 16px;
-        padding: 2rem;
-        transition: 0.3s;
-      }
-
-      .skill-category:hover {
-        border-color: var(--border-glow);
-        transform: translateY(-5px);
-      }
-
-      .category-title {
-        font-size: 1.25rem;
-        margin-bottom: 1.5rem;
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-      }
-
-      .category-title i {
-        color: var(--accent-cyan);
-      }
-
-      .skill-item {
-        margin-bottom: 1.25rem;
-      }
-
-      .skill-info {
-        display: flex;
-        justify-content: space-between;
-        font-size: 0.9rem;
-        margin-bottom: 0.5rem;
-      }
-
-      .skill-bar-bg {
-        background: rgba(255, 255, 255, 0.05);
-        height: 6px;
-        border-radius: 10px;
-        overflow: hidden;
-      }
-
-      .skill-bar-fill {
-        height: 100%;
-        background: var(--gradient-tech);
-        width: 0;
-        /* Animated via JS */
-        transition: width 1.5s ease-out;
-        border-radius: 10px;
-      }
-
-      .soft-skills-tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.75rem;
-        margin-top: 1rem;
-      }
-
-      .soft-tag {
-        background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        padding: 0.5rem 1rem;
-        border-radius: 8px;
-        font-size: 0.9rem;
-      }
-
-      /* --- EXPERIENCE (TIMELINE) --- */
-      .timeline {
-        position: relative;
-        max-width: 900px;
-        margin: 0 auto;
-      }
-
-      .timeline::before {
-        content: "";
-        position: absolute;
-        width: 2px;
-        background: rgba(255, 255, 255, 0.05);
-        top: 0;
-        bottom: 0;
-        left: 30px;
-      }
-
-      .timeline-item {
-        position: relative;
-        margin-bottom: 3rem;
-        padding-left: 80px;
-      }
-
-      .timeline-dot {
-        position: absolute;
-        left: 21px;
-        top: 5px;
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        background: var(--bg-main);
-        border: 4px solid var(--accent-cyan);
-        z-index: 2;
-      }
-
-      .timeline-date {
-        font-size: 0.85rem;
-        color: var(--accent-cyan);
-        font-weight: 700;
-        margin-bottom: 0.5rem;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-      }
-
-      .timeline-content {
-        background: var(--bg-card);
-        padding: 2rem;
-        border-radius: 16px;
-        border: 1px solid rgba(255, 255, 255, 0.02);
-      }
-
-      .timeline-role {
-        font-size: 1.5rem;
-        font-weight: 700;
-        margin-bottom: 0.25rem;
-      }
-
-      .timeline-company {
-        color: var(--text-muted);
-        font-weight: 500;
-        margin-bottom: 1rem;
-        display: inline-block;
-      }
-
-      .timeline-bullets {
-        list-style: none;
-      }
-
-      .timeline-bullets li {
-        position: relative;
-        padding-left: 1.5rem;
-        margin-bottom: 0.75rem;
-        color: var(--text-muted);
-        font-size: 0.95rem;
-      }
-
-      .timeline-bullets li::before {
-        content: "▹";
-        position: absolute;
-        left: 0;
-        color: var(--accent-cyan);
-      }
-
-      /* --- PROJECTS SECTION --- */
-      .project-filter {
-        display: flex;
-        gap: 1rem;
-        margin-bottom: 3rem;
-        flex-wrap: wrap;
-      }
-
-      .filter-btn {
-        background: transparent;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        color: var(--text-muted);
-        padding: 0.5rem 1.5rem;
-        border-radius: 8px;
-        cursor: pointer;
-        font-family: inherit;
-        font-weight: 500;
-        transition: 0.3s;
-      }
-
-      .filter-btn.active,
-      .filter-btn:hover {
-        background: rgba(0, 242, 254, 0.1);
-        border-color: var(--accent-cyan);
-        color: var(--accent-cyan);
-      }
-
-      .projects-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-        gap: 2rem;
-      }
-
-      .project-card {
-        background: var(--bg-card);
-        border-radius: 16px;
-        border: 1px solid rgba(255, 255, 255, 0.02);
-        padding: 2rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        position: relative;
-        overflow: hidden;
-        transition:
-          transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-          border-color 0.3s;
-      }
-
-      .project-card:hover {
-        transform: translateY(-8px);
-        border-color: rgba(0, 242, 254, 0.3);
-      }
-
-      .project-card::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 4px;
-        background: var(--gradient-tech);
-        opacity: 0;
-        transition: 0.3s;
-      }
-
-      .project-card:hover::before {
-        opacity: 1;
-      }
-
-      .project-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        margin-bottom: 1rem;
-      }
-
-      .project-role-badge {
-        background: rgba(255, 255, 255, 0.05);
-        padding: 0.3rem 0.8rem;
-        border-radius: 6px;
-        font-size: 0.8rem;
-        font-weight: 600;
-        color: var(--accent-cyan);
-        border: 1px solid rgba(0, 242, 254, 0.1);
-      }
-
-      .project-link {
-        color: var(--text-muted);
-        font-size: 1.1rem;
-        transition: 0.3s;
-      }
-
-      .project-link:hover {
-        color: var(--accent-cyan);
-      }
-
-      .project-title {
-        font-size: 1.5rem;
-        font-family: "Syne", sans-serif;
-        margin-bottom: 0.5rem;
-      }
-
-      .project-company {
-        font-size: 0.85rem;
-        color: var(--text-muted);
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        margin-bottom: 1rem;
-      }
-
-      .project-desc {
-        color: var(--text-muted);
-        font-size: 0.95rem;
-        margin-bottom: 1.5rem;
-        flex-grow: 1;
-      }
-
-      .project-highlights {
-        margin-bottom: 1.5rem;
-        background: rgba(0, 0, 0, 0.2);
-        padding: 1rem;
-        border-radius: 8px;
-        border-left: 2px solid var(--accent-cyan);
-      }
-
-      .project-highlights p {
-        font-size: 0.85rem;
-        color: var(--text-main);
-        margin-bottom: 0.4rem;
-      }
-
-      .project-highlights p:last-child {
-        margin-bottom: 0;
-      }
-
-      .project-tech-stack {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-      }
-
-      .tech-tag {
-        font-size: 0.75rem;
-        background: #1a1a22;
-        color: #fff;
-        padding: 0.25rem 0.6rem;
-        border-radius: 4px;
-        border: 1px solid rgba(255, 255, 255, 0.05);
-      }
-
-      /* --- FOOTER --- */
-      footer {
-        padding: 4rem 0;
-        border-top: 1px solid rgba(255, 255, 255, 0.05);
-        text-align: center;
-        color: var(--text-muted);
-        font-size: 0.9rem;
-      }
-
-      /* --- RESPONSIVENESS --- */
-      @media (max-width: 992px) {
-        .hero-grid {
-          grid-template-columns: 1fr;
-          gap: 4rem;
-        }
-
-        .hero-title {
-          font-size: 3.5rem;
-        }
-
-        .timeline::before {
-          left: 20px;
-        }
-
-        .timeline-item {
-          padding-left: 50px;
-        }
-
-        .timeline-dot {
-          left: 11px;
-        }
-      }
-
-      @media (max-width: 576px) {
-        .hero-title {
-          font-size: 2.8rem;
-        }
-
-        .section-title {
-          font-size: 2.2rem;
-        }
-
-        .cta-group {
-          flex-direction: column;
-        }
-
-        .hero-contact-info {
-          grid-template-columns: 1fr;
-        }
-
-        .nav-links {
-          display: none;
-        }
-      }
-    </style>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
   </head>
 
   <body>
@@ -681,33 +21,72 @@
       <div class="container nav-container">
         <a href="#" class="logo">KHALIS<span>.VU</span></a>
         <ul class="nav-links">
-          <li><a href="#hero" class="active">Home</a></li>
-          <li><a href="#skills">Skills</a></li>
-          <li><a href="#experience">Experience</a></li>
-          <li><a href="#projects">Projects</a></li>
+          <li>
+            <a href="#hero" class="active" data-vi="Trang chủ" data-en="Home"
+              >Trang chủ</a
+            >
+          </li>
+          <li>
+            <a href="#skills" data-vi="Kỹ năng" data-en="Skills">Kỹ năng</a>
+          </li>
+          <li>
+            <a href="#experience" data-vi="Kinh nghiệm" data-en="Experience"
+              >Kinh nghiệm</a
+            >
+          </li>
+          <li>
+            <a href="#projects" data-vi="Dự án" data-en="Projects">Dự án</a>
+          </li>
         </ul>
+
+        <!-- NÚT CHUYỂN NGÔN NGỮ -->
+        <div class="lang-switch">
+          <button id="lang-vi" class="lang-btn active">VI</button>
+          <span>/</span>
+          <button id="lang-en" class="lang-btn">EN</button>
+        </div>
       </div>
     </nav>
 
     <section id="hero">
       <div class="container hero-grid">
         <div>
-          <span class="hero-tag">Available for Full-time / Remote</span>
+          <span
+            class="hero-tag"
+            data-vi="Sẵn sàng cho Full-time / Remote"
+            data-en="Available for Full-time / Remote"
+          >
+            Sẵn sàng cho Full-time / Remote
+          </span>
           <h1 class="hero-title">
-            Hi, I'm <span>Ngo Duy Vu</span><br />Backend Developer
+            <span data-vi="Xin chào, tôi là" data-en="Hi, I'm"
+              >Xin chào, tôi là</span
+            >
+            <span>Ngo Duy Vu</span><br />
+            Backend Developer
           </h1>
-          <p class="hero-desc">
+          <p
+            class="hero-desc"
+            data-vi="Với 3 năm kinh nghiệm thực chiến với các Hệ thống quản trị doanh nghiệp, Real-time Platform và AI Marketplace sử dụng Go và Node.js. Luôn hướng tới giải pháp kiến trúc clean, scalable."
+            data-en="With 3 years of hands-on experience in Enterprise Management Systems, Real-time Platforms, and AI Marketplaces using Go and Node.js. Dedicated to clean architecture and scalable solutions."
+          >
             Với 3 năm kinh nghiệm thực chiến với các Hệ thống quản trị doanh
             nghiệp, Real-time Platform và AI Marketplace sử dụng <b>Go</b> và
             <b>NodeJS</b>. Luôn hướng tới giải pháp kiến trúc clean, scalable.
           </p>
           <div class="cta-group">
-            <a href="#projects" class="btn btn-primary"
-              >Xem Dự Án <i class="fas fa-arrow-right"></i
-            ></a>
-            <a href="mailto:vungovu00@gmail.com" class="btn btn-secondary"
-              >Liên Hệ Ngay</a
+            <a href="#projects" class="btn btn-primary">
+              <span data-vi="Xem Dự Án" data-en="View Projects">Xem Dự Án</span>
+              <i class="fas fa-arrow-right"></i>
+            </a>
+            <a
+              href="mailto:vungovu00@gmail.com"
+              class="btn btn-secondary"
+              data-vi="Liên Hệ Ngay"
+              data-en="Contact Me"
             >
+              Liên Hệ Ngay
+            </a>
           </div>
 
           <div class="hero-contact-info">
@@ -716,10 +95,16 @@
               <i class="fas fa-envelope"></i> vungovu00@gmail.com
             </div>
             <div class="info-item">
-              <i class="fas fa-map-marker-alt"></i> Bắc Từ Liêm, Hà Nội
+              <i class="fas fa-map-marker-alt"></i>
+              <span
+                data-vi="Bắc Từ Liêm, Hà Nội"
+                data-en="Bac Tu Liem, Hanoi, Vietnam"
+                >Bắc Từ Liêm, Hà Nội</span
+              >
             </div>
           </div>
         </div>
+
         <div class="terminal-box">
           <div class="terminal-header">
             <div class="dot dot-r"></div>
@@ -738,8 +123,12 @@
           <div class="terminal-row t-muted">
             &gt;&gt; Hanoi University of Industry (2020-2024)
           </div>
-          <div class="terminal-row t-muted">
-            &gt;&gt; Major: Software Engineering
+          <div
+            class="terminal-row t-muted"
+            data-vi="&gt;&gt; Chuyên ngành: Công nghệ Phần mềm"
+            data-en="&gt;&gt; Major: Software Engineering"
+          >
+            &gt;&gt; Chuyên ngành: Công nghệ Phần mềm
           </div>
           <div class="terminal-row">
             dev.<span class="t-yellow">getCoreTech()</span>;
@@ -750,7 +139,11 @@
           <div class="terminal-row">
             dev.<span class="t-yellow">status()</span>;
           </div>
-          <div class="terminal-row t-green">
+          <div
+            class="terminal-row t-green"
+            data-vi='&gt;&gt; "Tối ưu hóa performance hệ thống là đam mê!"'
+            data-en='&gt;&gt; "System performance optimization is my passion!"'
+          >
             &gt;&gt; "Tối ưu hóa performance hệ thống là đam mê!"
           </div>
         </div>
@@ -759,7 +152,13 @@
 
     <section id="skills">
       <div class="container">
-        <h2 class="section-title">Kỹ Năng Kỹ Thuật</h2>
+        <h2
+          class="section-title"
+          data-vi="Kỹ Năng Kỹ Thuật"
+          data-en="Technical Skills"
+        >
+          Kỹ Năng Kỹ Thuật
+        </h2>
         <div class="skills-grid">
           <div class="skill-category">
             <div class="category-title">
@@ -845,12 +244,26 @@
               </div>
             </div>
 
-            <h4 style="margin: 1.5rem 0 0.5rem 0; font-size: 1rem; color: #fff">
-              Soft Skills
+            <h4
+              style="margin: 1.5rem 0 0.5rem 0; font-size: 1rem; color: #fff"
+              data-vi="Kỹ Năng Mềm"
+              data-en="Soft Skills"
+            >
+              Kỹ Năng Mềm
             </h4>
             <div class="soft-skills-tags">
-              <span class="soft-tag">Đọc tài liệu English</span>
-              <span class="soft-tag">Tự học & Nghiên cứu sâu</span>
+              <span
+                class="soft-tag"
+                data-vi="Đọc tài liệu English"
+                data-en="English Documentation Reading"
+                >Đọc tài liệu English</span
+              >
+              <span
+                class="soft-tag"
+                data-vi="Tự học & Nghiên cứu sâu"
+                data-en="Self-learning & Deep Research"
+                >Tự học & Nghiên cứu sâu</span
+              >
               <span class="soft-tag">Problem-solving</span>
             </div>
           </div>
@@ -860,7 +273,13 @@
 
     <section id="experience">
       <div class="container">
-        <h2 class="section-title">Kinh Nghiệm Làm Việc</h2>
+        <h2
+          class="section-title"
+          data-vi="Kinh Nghiệm Làm Việc"
+          data-en="Work Experience"
+        >
+          Kinh Nghiệm Làm Việc
+        </h2>
         <div class="timeline">
           <div class="timeline-item">
             <div class="timeline-dot"></div>
@@ -869,23 +288,38 @@
               <h3 class="timeline-role">Backend Developer</h3>
               <span class="timeline-company">AHV HOLDING</span>
               <ul class="timeline-bullets">
-                <li>
+                <li
+                  data-vi="Thiết kế, phát triển hệ sinh thái sản phẩm cốt lõi: CMS, HRM, CRM, Real-time Monitoring, AI Platform."
+                  data-en="Architected and developed core product ecosystem: CMS, HRM, CRM, Real-time Monitoring, and AI Platform."
+                >
                   Thiết kế, phát triển hệ sinh thái sản phẩm cốt lõi: CMS, HRM,
                   CRM, Real-time Monitoring, AI Platform.
                 </li>
-                <li>
+                <li
+                  data-vi="Tối ưu hệ thống bằng chiến lược Caching, xử lý bất đồng bộ (Asynchronous) và tối ưu hóa câu lệnh Database."
+                  data-en="Optimized performance through caching strategies, asynchronous processing, and database query tuning."
+                >
                   Tối ưu hệ thống bằng chiến lược Caching, xử lý bất đồng bộ
                   (Asynchronous) và tối ưu hóa câu lệnh Database.
                 </li>
-                <li>
+                <li
+                  data-vi="Xây dựng kiến trúc Distributed Services, đảm bảo tính mở rộng (Scalability) và decoupling giữa các dịch vụ."
+                  data-en="Built Distributed Services architecture, ensuring scalability and service decoupling."
+                >
                   Xây dựng kiến trúc Distributed Services, đảm bảo tính mở rộng
                   (Scalability) và decoupling giữa các dịch vụ.
                 </li>
-                <li>
+                <li
+                  data-vi="Ứng dụng AI-assisted Development (AI spec-driven, OpenSpec, MCP) tăng tốc độ phát triển."
+                  data-en="Applied AI-assisted Development workflows (AI spec-driven, OpenSpec, MCP) to accelerate development speed."
+                >
                   Ứng dụng AI-assisted Development (AI spec-driven, OpenSpec,
                   MCP) tăng tốc độ phát triển.
                 </li>
-                <li>
+                <li
+                  data-vi="Thiết lập & quản trị pipeline CI/CD giúp tự động hóa quá trình triển khai, giảm thiểu lỗi thủ công."
+                  data-en="Established & managed CI/CD pipelines to automate deployments and minimize manual errors."
+                >
                   Thiết lập & quản trị pipeline CI/CD giúp tự động hóa quá trình
                   triển khai, giảm thiểu lỗi thủ công.
                 </li>
@@ -900,15 +334,24 @@
               <h3 class="timeline-role">Backend Developer</h3>
               <span class="timeline-company">BITU VIETNAM</span>
               <ul class="timeline-bullets">
-                <li>
+                <li
+                  data-vi="Phát triển hệ thống Backend Node.js trong môi trường dịch vụ độc lập (CMS, HRM, CRM) cho lĩnh vực EdTech."
+                  data-en="Developed Node.js backend systems within an independent service environment (CMS, HRM, CRM) for the EdTech sector."
+                >
                   Phát triển hệ thống Backend Node.js trong môi trường dịch vụ
-                  độc lập(CMS, HRM, CRM) cho lĩnh vực dụng EdTech.
+                  độc lập (CMS, HRM, CRM) cho lĩnh vực EdTech.
                 </li>
-                <li>
+                <li
+                  data-vi="Thực hiện Refactor mã nguồn giúp tăng tính ổn định và khả năng mở rộng hệ thống."
+                  data-en="Refactored codebase to improve overall system stability and scalability."
+                >
                   Thực hiện Refactor mã nguồn giúp tăng tính ổn định và khả năng
                   mở rộng hệ thống.
                 </li>
-                <li>
+                <li
+                  data-vi="Phối hợp liên phòng ban để chuyển đổi các yêu cầu nghiệp vụ kinh doanh thành kiến trúc giải pháp kỹ thuật."
+                  data-en="Collaborated cross-functionally to translate complex business requirements into technical architectures."
+                >
                   Phối hợp liên phòng ban để chuyển đổi các yêu cầu nghiệp vụ
                   kinh doanh thành kiến trúc giải pháp kỹ thuật.
                 </li>
@@ -921,10 +364,23 @@
 
     <section id="projects">
       <div class="container">
-        <h2 class="section-title">Dự Án Tiêu Biểu</h2>
+        <h2
+          class="section-title"
+          data-vi="Dự Án Tiêu Biểu"
+          data-en="Featured Projects"
+        >
+          Dự Án Tiêu Biểu
+        </h2>
 
         <div class="project-filter">
-          <button class="filter-btn active" data-filter="all">Tất Cả</button>
+          <button
+            class="filter-btn active"
+            data-filter="all"
+            data-vi="Tất Cả"
+            data-en="All"
+          >
+            Tất Cả
+          </button>
           <button class="filter-btn" data-filter="go">Golang</button>
           <button class="filter-btn" data-filter="node">NodeJS</button>
           <button class="filter-btn" data-filter="fullstack">
@@ -933,6 +389,7 @@
         </div>
 
         <div class="projects-grid">
+          <!-- FLASH EMAIL -->
           <div class="project-card" data-tech="fullstack">
             <div>
               <div class="project-header">
@@ -941,23 +398,32 @@
                   href="https://flashemail.whizz.id.vn/"
                   target="_blank"
                   class="project-link"
-                  title="Xem Live Demo"
+                  title="Live Demo"
                   ><i class="fas fa-external-link-alt"></i
                 ></a>
               </div>
               <h3 class="project-title">FLASH EMAIL</h3>
-              <p class="project-desc">
+              <p
+                class="project-desc"
+                data-vi="Giải pháp mã nguồn mở cho phép khởi tạo số lượng lớn Email ảo tạm thời (Temp Email), vận hành hoàn toàn trên mô hình Serverless Edge Computing."
+                data-en="An open-source solution for bulk temporary email creation, operating entirely on a Serverless Edge Computing model."
+              >
                 Giải pháp mã nguồn mở cho phép khởi tạo số lượng lớn Email ảo
                 tạm thời (Temp Email), vận hành hoàn toàn trên mô hình
                 Serverless Edge Computing.
               </p>
-
               <div class="project-highlights">
-                <p>
+                <p
+                  data-vi="☁️ Xây dựng trên nền tảng Cloudflare Workers tận dụng tính năng Email Routing để tiếp nhận và điều phối mail."
+                  data-en="☁️ Built on Cloudflare Workers using Email Routing to ingest and dispatch emails."
+                >
                   ☁️ Xây dựng trên nền tảng <b>Cloudflare Workers</b> tận dụng
                   tính năng <b>Email Routing</b> để tiếp nhận và điều phối mail.
                 </p>
-                <p>
+                <p
+                  data-vi="💾 Lưu trữ trạng thái và dữ liệu tốc độ cực cao kết hợp giữa KV (Key-Value), D1 Database và quản lý realtime thông qua Durable Objects (DO)."
+                  data-en="💾 Ultra-fast state and data storage combining KV (Key-Value), D1 Database, and real-time management via Durable Objects (DO)."
+                >
                   💾 Lưu trữ trạng thái và dữ liệu tốc độ cực cao kết hợp giữa
                   <b>KV (Key-Value)</b>, <b>D1 Database</b> và quản lý realtime
                   thông qua <b>Durable Objects (DO)</b>.
@@ -973,6 +439,7 @@
             </div>
           </div>
 
+          <!-- AHVWORKS -->
           <div class="project-card" data-tech="node">
             <div>
               <div class="project-header">
@@ -980,17 +447,26 @@
                 <span class="project-company">AHV HOLDING</span>
               </div>
               <h3 class="project-title">AHVWORKS (HRM System)</h3>
-              <p class="project-desc">
+              <p
+                class="project-desc"
+                data-vi="Hệ thống quản lý nhân sự phức tạp xử lý hồ sơ, hợp đồng, bảng lương và chấm công đa phương thức."
+                data-en="Complex HRM system handling profiles, contracts, payroll, and multi-method time tracking."
+              >
                 Hệ thống quản lý nhân sự phức tạp xử lý hồ sơ, hợp đồng, bảng
                 lương và chấm công đa phương thức.
               </p>
-
               <div class="project-highlights">
-                <p>
+                <p
+                  data-vi="⚡ Tối ưu module RBAC bằng chiến lược Cache-through & Caching Promise (Thundering Herd)."
+                  data-en="⚡ Optimized RBAC module via Cache-through & Caching Promise (Thundering Herd prevention)."
+                >
                   ⚡ Tối ưu module RBAC bằng chiến lược <b>Cache-through</b> &
                   <b>Caching Promise (Thundering Herd)</b>.
                 </p>
-                <p>
+                <p
+                  data-vi="🔒 Bảo toàn tính toàn vẹn giao dịch đổi thưởng bằng Optimistic Locking và Redis Lock/Mutex."
+                  data-en="🔒 Ensured transactional integrity in reward redemption via Optimistic Locking and Redis Lock/Mutex."
+                >
                   🔒 Bảo toàn tính toàn vẹn giao dịch đổi thưởng bằng
                   <b>Optimistic Locking</b> và <b>Redis Lock/Mutex</b>.
                 </p>
@@ -1004,6 +480,7 @@
             </div>
           </div>
 
+          <!-- AHVUptime -->
           <div class="project-card" data-tech="go">
             <div>
               <div class="project-header">
@@ -1011,18 +488,27 @@
                 <span class="project-company">AHV HOLDING</span>
               </div>
               <h3 class="project-title">AHVUptime</h3>
-              <p class="project-desc">
+              <p
+                class="project-desc"
+                data-vi="Hệ thống giám sát và cảnh báo thời gian thực 24/7 cho hơn 3.000 máy chủ và website tải lượng lớn."
+                data-en="Real-time 24/7 monitoring and alerting system for over 3,000 servers and high-traffic websites."
+              >
                 Hệ thống giám sát và cảnh báo thời gian thực 24/7 cho hơn 3.000
                 máy chủ và website tải lượng lớn.
               </p>
-
               <div class="project-highlights">
-                <p>
+                <p
+                  data-vi="📊 Pipeline xử lý data streaming dùng Kafka Streams (Goka) xử lý ~15.000 msgs/phút, giảm 50% thời gian cảnh báo."
+                  data-en="📊 Data streaming pipeline built with Kafka Streams (Goka) processing ~15,000 msgs/min, reducing alert latency by 50%."
+                >
                   📊 Pipeline xử lý data streaming dùng
                   <b>Kafka Streams (Goka)</b> xử lý <b>~15.000 msgs/phút</b>,
                   giảm 50% thời gian cảnh báo.
                 </p>
-                <p>
+                <p
+                  data-vi="🔍 Sử dụng Cuckoo Filter để phân định chính xác & tối ưu bộ nhớ quản lý server."
+                  data-en="🔍 Utilized Cuckoo Filter for accurate membership testing and memory-optimized server tracking."
+                >
                   🔍 Sử dụng <b>Cuckoo Filter</b> để phân định chính xác & tối
                   ưu bộ nhớ quản lý server.
                 </p>
@@ -1038,6 +524,7 @@
             </div>
           </div>
 
+          <!-- AHV AI Platform -->
           <div class="project-card" data-tech="go">
             <div>
               <div class="project-header">
@@ -1045,17 +532,26 @@
                 <span class="project-company">AHV HOLDING</span>
               </div>
               <h3 class="project-title">AHV AI Platform</h3>
-              <p class="project-desc">
+              <p
+                class="project-desc"
+                data-vi="Chợ điện tử AI đa nhà cung cấp & điều phối sinh ảnh (GenAI workloads) với cơ chế tính phí linh hoạt."
+                data-en="Multi-vendor AI marketplace & orchestration engine for GenAI workloads with flexible billing."
+              >
                 Chợ điện tử AI đa nhà cung cấp & điều phối sinh ảnh (GenAI
                 workloads) với cơ chế tính phí linh hoạt.
               </p>
-
               <div class="project-highlights">
-                <p>
+                <p
+                  data-vi="🤖 Thiết kế hệ thống Core định tuyến và chuyển đổi dự phòng (failover) mượt mà đến các AI vendors (Gemini, PiAPI...)."
+                  data-en="🤖 Designed core routing and seamless failover systems across multiple AI vendors (Gemini, PiAPI...)."
+                >
                   🤖 Thiết kế hệ thống Core định tuyến và chuyển đổi dự phòng
                   (failover) mượt mà đến các AI vendors (Gemini, PiAPI...).
                 </p>
-                <p>
+                <p
+                  data-vi="⚙️ Quản lý hàng đợi và tác vụ nặng thông qua cơ chế Idempotency và State Machine."
+                  data-en="⚙️ Managed queues and heavy workloads through Idempotency mechanisms and State Machines."
+                >
                   ⚙️ Quản lý hàng đợi và tác vụ nặng thông qua cơ chế
                   <b>Idempotency</b> và <b>State Machine</b>.
                 </p>
@@ -1069,6 +565,7 @@
             </div>
           </div>
 
+          <!-- Directus CMS Custom -->
           <div class="project-card" data-tech="fullstack">
             <div>
               <div class="project-header">
@@ -1076,17 +573,26 @@
                 <span class="project-company">Freelancer</span>
               </div>
               <h3 class="project-title">Directus CMS Custom</h3>
-              <p class="project-desc">
+              <p
+                class="project-desc"
+                data-vi="Thiết kế và triển khai hệ thống quản trị nội dung kéo thả tối ưu, tự động hóa sao lưu an toàn."
+                data-en="Designed and deployed a drag-and-drop CMS with automated secure backup mechanisms."
+              >
                 Thiết kế và triển khai hệ thống quản trị nội dung kéo thả tối
                 ưu, tự động hóa sao lưu an toàn.
               </p>
-
               <div class="project-highlights">
-                <p>
+                <p
+                  data-vi="🛠️ Đồng bộ hóa mượt mà giữa NodeJS Backend và ReactJS Frontend."
+                  data-en="🛠️ Seamless integration between Node.js Backend and ReactJS Frontend."
+                >
                   🛠️ Đồng bộ hóa mượt mà giữa NodeJS Backend và ReactJS
                   Frontend.
                 </p>
-                <p>
+                <p
+                  data-vi="💾 Đảm bảo an toàn dữ liệu với cơ chế backup tự động PostgreSQL."
+                  data-en="💾 Ensured data reliability via automated PostgreSQL backup mechanisms."
+                >
                   💾 Đảm bảo an toàn dữ liệu với cơ chế backup tự động
                   PostgreSQL.
                 </p>
@@ -1100,6 +606,7 @@
             </div>
           </div>
 
+          <!-- Bitu English Platform -->
           <div class="project-card" data-tech="node">
             <div>
               <div class="project-header">
@@ -1107,17 +614,26 @@
                 <span class="project-company">BITU VIETNAM</span>
               </div>
               <h3 class="project-title">Bitu English Platform</h3>
-              <p class="project-desc">
+              <p
+                class="project-desc"
+                data-vi="Duy trì và tối ưu các tính năng cốt lõi cho hệ thống EdTech lớn chạy môi trường Distributed Services."
+                data-en="Maintained and optimized core features for a large-scale EdTech platform running Distributed Services."
+              >
                 Duy trì và tối ưu các tính năng cốt lõi cho hệ thống EdTech lớn
                 chạy môi trường Distributed Services.
               </p>
-
               <div class="project-highlights">
-                <p>
+                <p
+                  data-vi="🔍 Tích hợp bộ công cụ tìm kiếm nâng cao siêu tốc bằng RedisSearch."
+                  data-en="🔍 Integrated high-speed advanced search capability using RedisSearch."
+                >
                   🔍 Tích hợp bộ công cụ tìm kiếm nâng cao siêu tốc bằng
                   <b>RedisSearch</b>.
                 </p>
-                <p>
+                <p
+                  data-vi="📝 Chuẩn hóa tài liệu hệ thống bằng Swagger API Documentation cho Frontend tích hợp gọn gàng."
+                  data-en="📝 Standardized API documentation using Swagger for seamless Frontend integration."
+                >
                   📝 Chuẩn hóa tài liệu hệ thống bằng
                   <b>Swagger API Documentation</b> cho Frontend tích hợp gọn
                   gàng.
@@ -1140,79 +656,5 @@
         <p>&copy; 2026 Ngo Duy Vu. Engineered with Passion. Built with Code.</p>
       </div>
     </footer>
-
-    <script>
-      // 1. Hiệu ứng làm mượt chuyển đổi Active trạng thái Menu khi cuộn trang
-      const sections = document.querySelectorAll("section");
-      const navLi = document.querySelectorAll(".nav-links a");
-
-      window.addEventListener("scroll", () => {
-        let current = "";
-        sections.forEach((section) => {
-          const sectionTop = section.offsetTop;
-          const sectionHeight = section.clientHeight;
-          if (pageYOffset >= sectionTop - 150) {
-            current = section.getAttribute("id");
-          }
-        });
-
-        navLi.forEach((a) => {
-          a.classList.remove("active");
-          if (a.getAttribute("href").includes(current)) {
-            a.classList.add("active");
-          }
-        });
-      });
-
-      // 2. Kích hoạt hiệu ứng chạy Thanh Kỹ Năng (Skill Bars)
-      const skillsSection = document.getElementById("skills");
-      const progressBars = document.querySelectorAll(".skill-bar-fill");
-
-      function showProgress() {
-        progressBars.forEach((progressBar) => {
-          const value = progressBar.getAttribute("data-percent");
-          progressBar.style.width = value;
-        });
-      }
-
-      const observer = new IntersectionObserver(
-        (entries, observer) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              showProgress();
-              observer.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: 0.3 },
-      );
-
-      observer.observe(skillsSection);
-
-      // 3. Xử lý bộ lọc dự án (Project Grid Filter)
-      const filterBtns = document.querySelectorAll(".filter-btn");
-      const projectCards = document.querySelectorAll(".project-card");
-
-      filterBtns.forEach((btn) => {
-        btn.addEventListener("click", (e) => {
-          filterBtns.forEach((b) => b.classList.remove("active"));
-          e.target.classList.add("active");
-
-          const filterValue = e.target.getAttribute("data-filter");
-
-          projectCards.forEach((card) => {
-            if (
-              filterValue === "all" ||
-              card.getAttribute("data-tech") === filterValue
-            ) {
-              card.style.display = "flex";
-              card.style.animation = "fadeIn 0.5s ease forwards";
-            } else {
-              card.style.display = "none";
-            }
-          });
-        });
-      });
-    </script>
   </body>
 </html>
